@@ -8,6 +8,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import slbedu.library.model.Book;
+import slbedu.library.model.User;
 
 public class BookDAO {
 	private EntityManager em;
@@ -47,29 +48,32 @@ public class BookDAO {
 		}
 	}
 
-	public void borrowBook(Book book) {
+	public void borrowBook(Book bookToBorrow, User userWhoTakesTheBook) {
 		EntityTransaction tx = beginTransaciton();
-		Book foundBook = findById(book.getId());
+		Book foundBook = findById(bookToBorrow.getId());
 		int newAmount = foundBook.getAmount() - 1;
 		foundBook.setAmount(newAmount);
+		userWhoTakesTheBook.getCurrentBooks().add(foundBook);
 		commitTransaction(tx);
 	}
 
-	public void returnBook(Book book) {
+	public void returnBook(Book book, String userId) {
 		EntityTransaction tx = beginTransaciton();
 		Book foundBook = findById(book.getId());
 		int newAmount = book.getAmount() + 1;
 		foundBook.setAmount(newAmount);
+		User userWhoReturnsTheBook = em.find(User.class, userId);
+		userWhoReturnsTheBook.getCurrentBooks().remove(foundBook);
 		commitTransaction(tx);
 	}
 
-	public EntityTransaction beginTransaciton() {
+	private EntityTransaction beginTransaciton() {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		return tx;
 	}
 
-	public void commitTransaction(EntityTransaction tx) {
+	private void commitTransaction(EntityTransaction tx) {
 		try {
 			tx.commit();
 		} finally {
