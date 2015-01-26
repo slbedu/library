@@ -29,7 +29,7 @@ public class UserDAO {
     }
     
     public boolean isUserExistng(String userName, String password){
-        String txtQuery = "SELECT u FROM User u WHERE u.userName = :userName AND u.password = :password";
+        String txtQuery = "SELECT u FROM User u WHERE u.userName=:userName AND u.password=:password";
         TypedQuery<User> query = em.createQuery(txtQuery, User.class);
         query.setParameter("userName", userName);
         query.setParameter("password", getHashedPassword(password));
@@ -53,8 +53,8 @@ public class UserDAO {
     
     private String getHashedPassword(String password){
         try {
-            MessageDigest mda = MessageDigest.getInstance("SHA-512", "BC");
-            password = mda.digest(password.getBytes()).toString();
+            MessageDigest mda = MessageDigest.getInstance("SHA-512");
+            password = new String(mda.digest(password.getBytes()));
         } catch (Exception e) {
             e.printStackTrace();
         }
