@@ -27,15 +27,15 @@ public class UserDAO {
             }
         }
     }
-    
-    public boolean isUserExistng(String userName, String password){
+
+    public boolean validateUserCredentials(String userName, String password) {
         String txtQuery = "SELECT u FROM User u WHERE u.userName=:userName AND u.password=:password";
         TypedQuery<User> query = em.createQuery(txtQuery, User.class);
         query.setParameter("userName", userName);
         query.setParameter("password", getHashedPassword(password));
         return queryUser(query) != null;
     }
-    
+
     public User findUserByName(String userName) {
         String txtQuery = "SELECT u FROM User u WHERE u.userName = :userName";
         TypedQuery<User> query = em.createQuery(txtQuery, User.class);
@@ -50,8 +50,8 @@ public class UserDAO {
             return null;
         }
     }
-    
-    private String getHashedPassword(String password){
+
+    private String getHashedPassword(String password) {
         try {
             MessageDigest mda = MessageDigest.getInstance("SHA-512");
             password = new String(mda.digest(password.getBytes()));
