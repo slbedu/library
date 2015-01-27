@@ -56,7 +56,7 @@ public class Library {
     }
 
     private static void registerUser(String userName, String password,
-            String email, Date dateOfBirth) {
+                                     String email, Date dateOfBirth) {
         boolean userExistng = userDAO.findUserByName(userName) != null;
         if (userExistng) {
             System.out.println("User already exists");
