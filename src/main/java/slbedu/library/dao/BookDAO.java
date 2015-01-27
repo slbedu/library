@@ -18,7 +18,7 @@ public class BookDAO {
     }
 
     public void addBook(Book book) {
-        EntityTransaction tx = beginTransaciton();
+        EntityTransaction tx = beginTransaction();
         Book foundBook = findByAuthorAndTitle(book.getAuthor(), book.getTitle());
         if (foundBook == null) {
             em.persist(book);
@@ -49,7 +49,7 @@ public class BookDAO {
     }
 
     public void borrowBook(Book bookToBorrow, User userWhoTakesTheBook) {
-        EntityTransaction tx = beginTransaciton();
+        EntityTransaction tx = beginTransaction();
         Book foundBook = findById(bookToBorrow.getId());
         int newAmount = foundBook.getAmount() - 1;
         foundBook.setAmount(newAmount);
@@ -58,7 +58,7 @@ public class BookDAO {
     }
 
     public void returnBook(Book book, User user) {
-        EntityTransaction tx = beginTransaciton();
+        EntityTransaction tx = beginTransaction();
         Book foundBook = findById(book.getId());
         int newAmount = book.getAmount() + 1;
         foundBook.setAmount(newAmount);
@@ -67,7 +67,7 @@ public class BookDAO {
         commitTransaction(tx);
     }
 
-    private EntityTransaction beginTransaciton() {
+    private EntityTransaction beginTransaction() {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         return tx;
