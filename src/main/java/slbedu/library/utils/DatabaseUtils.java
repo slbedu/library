@@ -12,7 +12,7 @@ import slbedu.library.model.Book;
 import slbedu.library.model.User;
 
 public class DatabaseUtils {
-    private static final String LIBRARY_PERSISTENCE_UNIT = "library-persistence-unit";
+
     private static User[] USERS = {
             new User("First User", "123456", "first.user@somemail.com",
                     new Date()),
@@ -28,8 +28,8 @@ public class DatabaseUtils {
 
     private EntityManagerFactory emf;
 
-    public DatabaseUtils() {
-        emf = Persistence.createEntityManagerFactory(LIBRARY_PERSISTENCE_UNIT);
+    public DatabaseUtils(EntityManagerFactory emf) {
+        this.emf = emf;
     }
 
     public void addTestDataToDB() {
