@@ -34,10 +34,18 @@ public class DatabaseUtils {
 
     public void addTestDataToDB() {
         EntityManager em = initEntityManager();
+        deleteData(em);
         addTestUsers(em);
         addTestBooks(em);
         closeEntityManager(em);
     }
+
+    private void deleteData(EntityManager em) {
+        em.getTransaction().begin();
+        em.createQuery("DELETE FROM Book").executeUpdate();
+        em.createQuery("DELETE FROM User").executeUpdate();
+        em.getTransaction().commit();
+   }
 
     public EntityManager initEntityManager() {
         return emf.createEntityManager();
