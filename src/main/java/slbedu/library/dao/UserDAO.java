@@ -32,6 +32,7 @@ public class UserDAO {
         String txtQuery = "SELECT u FROM User u WHERE u.userName=:userName AND u.password=:password";
         TypedQuery<User> query = em.createQuery(txtQuery, User.class);
         query.setParameter("userName", userName);
+        query.setParameter("password", getHashedPassword(password));
         return queryUser(query) != null;
     }
     
