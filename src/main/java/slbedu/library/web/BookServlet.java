@@ -1,28 +1,31 @@
 package slbedu.library.web;
 
-import com.google.gson.Gson;
-import slbedu.library.dao.BookDAO;
-import slbedu.library.utils.DatabaseUtils;
+import java.io.IOException;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import slbedu.library.dao.BookDAO;
+import slbedu.library.utils.DatabaseUtils;
+
+import com.google.gson.Gson;
 
 @WebServlet(urlPatterns = "/BookServlet")
 public class BookServlet extends HttpServlet {
-
-    @PersistenceUnit
-    private EntityManagerFactory emf;
+    private static final long serialVersionUID = 1523071258964697936L;
+    
+    @Inject
+    private BookDAO bookDAO;
+    
+    @Inject
+    private DatabaseUtils utils;
 
     @Override
     public void init() throws ServletException {
-        DatabaseUtils utils = new DatabaseUtils(emf);
         utils.addTestDataToDB();
     }
 
@@ -30,7 +33,6 @@ public class BookServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String bookId = req.getParameter("bookId");
 
-        BookDAO bookDAO = new BookDAO(emf.createEntityManager());
         Gson gson = new Gson();
         String resource = null;
 
