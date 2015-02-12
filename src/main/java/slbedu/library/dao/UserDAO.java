@@ -2,14 +2,14 @@ package slbedu.library.dao;
 
 import java.security.MessageDigest;
 
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import slbedu.library.model.User;
 
-@Stateless
+@Singleton
 public class UserDAO {
 
     @PersistenceContext

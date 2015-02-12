@@ -1,15 +1,18 @@
 package slbedu.library.services;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.Stateful;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 
 import slbedu.library.dao.UserDAO;
 import slbedu.library.model.User;
 
-@SessionScoped
+@Stateful
+@Path("user")
 public class UserManager implements Serializable {
 
     private static final long serialVersionUID = 6780857238650315773L;
@@ -19,9 +22,11 @@ public class UserManager implements Serializable {
     @Inject
     private UserDAO userDAO;
 
-    public User registerUser(String username, String password, String email) {
-        currentUser = new User(username, password, email, new Date());
-        userDAO.addUser(currentUser);
+    @POST
+    @Consumes
+    public User registerUser(User newUser) {
+        userDAO.addUser(newUser);
+        currentUser = newUser;
         return currentUser;
     }
 
