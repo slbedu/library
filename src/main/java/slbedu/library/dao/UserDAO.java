@@ -2,30 +2,22 @@ package slbedu.library.dao;
 
 import java.security.MessageDigest;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import slbedu.library.model.User;
 
-@ApplicationScoped
+@Stateless
 public class UserDAO {
 
-    @Inject
+    @PersistenceContext
     private EntityManager em;
 
     public void addUser(User user) {
-        try {
-            em.getTransaction().begin();
-            user.setPassword(getHashedPassword(user.getPassword()));
-            em.persist(user);
-            em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-        }
+        user.setPassword(getHashedPassword(user.getPassword()));
+        em.persist(user);
     }
 
     public boolean validateUserCredentials(String userName, String password) {

@@ -2,7 +2,7 @@ package slbedu.library.web;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import slbedu.library.dao.BookDAO;
-import slbedu.library.utils.DatabaseUtils;
 
 import com.google.gson.Gson;
 
@@ -18,15 +17,11 @@ import com.google.gson.Gson;
 public class BookServlet extends HttpServlet {
     private static final long serialVersionUID = 1523071258964697936L;
     
-    @Inject
+    @EJB
     private BookDAO bookDAO;
-    
-    @Inject
-    private DatabaseUtils utils;
 
     @Override
     public void init() throws ServletException {
-        utils.addTestDataToDB();
     }
 
     @Override
