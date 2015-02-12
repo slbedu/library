@@ -7,7 +7,7 @@
 <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript">
     $.ajax({
-        url : '/library/BookServlet',
+        url : '/library/rest/book',
         type : "GET",
         dataType : "json",
         success : function(data, textStatus, jqXHR) {
@@ -16,8 +16,9 @@
     });
 
     function drawTable(data) {
-        for (var i = 0; i < data.length; i++) {
-            drawRow(data[i]);
+    	var books = data.book;
+        for (var i = 0; i < books.length; i++) {
+            drawRow(books[i]);
         }
     }
 

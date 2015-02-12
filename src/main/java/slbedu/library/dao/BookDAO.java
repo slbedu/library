@@ -2,7 +2,7 @@ package slbedu.library.dao;
 
 import java.util.Collection;
 
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import slbedu.library.model.Book;
 import slbedu.library.model.User;
 
-@Stateless
+@Singleton
 public class BookDAO {
     @PersistenceContext
     private EntityManager em;
