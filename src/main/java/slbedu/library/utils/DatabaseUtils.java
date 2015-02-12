@@ -2,16 +2,17 @@ package slbedu.library.utils;
 
 import java.util.Date;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import slbedu.library.dao.BookDAO;
 import slbedu.library.dao.UserDAO;
 import slbedu.library.model.Book;
 import slbedu.library.model.User;
 
-@ApplicationScoped
+@Stateless
 public class DatabaseUtils {
     
     private static User[] USERS = {
@@ -27,13 +28,13 @@ public class DatabaseUtils {
                     "978-3-16-148410-0", 5),
             new Book("Tom Sawyer", "Mark Twain", "978-4-16-241512-0", 0)};
 
-    @Inject
+    @PersistenceContext
     private EntityManager em;
 
-    @Inject
+    @EJB
     private BookDAO bookDAO;
     
-    @Inject
+    @EJB
     private UserDAO userDAO;
     
     public void addTestDataToDB() {
@@ -43,10 +44,8 @@ public class DatabaseUtils {
     }
 
     private void deleteData() {
-        em.getTransaction().begin();
         em.createQuery("DELETE FROM Book").executeUpdate();
         em.createQuery("DELETE FROM User").executeUpdate();
-        em.getTransaction().commit();
    }
 
     private void addTestUsers() {
