@@ -6,30 +6,44 @@
 <link rel="stylesheet" type="text/css" href="styles/library.css" />
 <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript">
-    $.ajax({
-        url : '/library/rest/book',
-        type : "GET",
-        dataType : "json",
-        success : function(data, textStatus, jqXHR) {
-            drawTable(data);
-        }
-    });
+	$(document).ready(function() {
+		$.ajax({
+		    url: 'rest/user/authenticated',
+		    type: "GET",
+		    contentType: "application/json;charset=UTF-8",
+		    statusCode: {
+			        200: function() {
+			        	$( ".login_register" ).hide();
+			        }
+		        }
+		    });
+		
+	});
 
-    function drawTable(data) {
-    	var books = data.book;
-        for (var i = 0; i < books.length; i++) {
-            drawRow(books[i]);
-        }
-    }
+	$.ajax({
+		url : '/library/rest/book',
+		type : "GET",
+		dataType : "json",
+		success : function(data, textStatus, jqXHR) {
+			drawTable(data);
+		}
+	});
 
-    function drawRow(rowData) {
-        var row = $("<tr />")
-        $("#books_table").append(row);
-        row.append($("<td>" + rowData.title + "</td>"));
-        row.append($("<td>" + rowData.author + "</td>"));
-        row.append($("<td>" + rowData.isbn + "</td>"));
-        row.append($("<td>" + rowData.amount + "</td>"));
-    }
+	function drawTable(data) {
+		var books = data.book;
+		for (var i = 0; i < books.length; i++) {
+			drawRow(books[i]);
+		}
+	}
+
+	function drawRow(rowData) {
+		var row = $("<tr />")
+		$("#books_table").append(row);
+		row.append($("<td>" + rowData.title + "</td>"));
+		row.append($("<td>" + rowData.author + "</td>"));
+		row.append($("<td>" + rowData.isbn + "</td>"));
+		row.append($("<td>" + rowData.amount + "</td>"));
+	}
 </script>
 
 </head>
@@ -47,7 +61,10 @@
 			</tr>
 		</table>
 	</div>
-	
-	<a href="register.html" class="register_form"> Register </a>
+
+	<div class="login_register">
+		<a href="login.html" class="login_form"> Log in </a> <a
+			href="register.html" class="register_form"> Register </a>
+	</div>
 </body>
 </html>
