@@ -15,9 +15,7 @@ import slbedu.library.model.Book;
 
 @Stateless
 @Path("book")
-public class BookManager implements Serializable {
-
-    private static final long serialVersionUID = 1274073464259696963L;
+public class BookManager {
 
     @Inject
     private BookDAO bookDAO;

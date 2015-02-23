@@ -12,7 +12,8 @@ import java.util.Set;
 @XmlRootElement
 @Table(name = "USERS")
 public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = -7196507424378163030L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +29,7 @@ public class User implements Serializable {
     private Date dateOfBirth;
 
     @OneToMany
-    private Set<Book> currentBooks = new HashSet<Book>();
+    private Set<Book> currentBooks = new HashSet<>();
 
     public User() {
     }
