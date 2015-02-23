@@ -2,6 +2,7 @@ package slbedu.library.services;
 
 import slbedu.library.dao.BookDAO;
 import slbedu.library.model.Book;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
