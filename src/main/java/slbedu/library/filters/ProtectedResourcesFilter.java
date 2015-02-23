@@ -24,31 +24,32 @@ public class ProtectedResourcesFilter implements Filter {
 
     @Inject
     UserContext userContext;
-    
+
     public void init(FilterConfig fConfig) throws ServletException {
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if(!isHttpCall(request, response)) { 
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain) throws IOException, ServletException {
+        if (!isHttpCall(request, response)) {
             return;
         }
-	    HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-	    HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-	    User currentUser = userContext.getCurrentUser();
-	    if(currentUser == null) { 
-	        String loginUrl = httpServletRequest.getContextPath() + "/login.html";
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        User currentUser = userContext.getCurrentUser();
+        if (currentUser == null) {
+            String loginUrl = httpServletRequest.getContextPath()
+                    + "/login.html";
             httpServletResponse.sendRedirect(loginUrl);
-	        return;
-	    }
-		chain.doFilter(request, response);
-	}
-
-    private boolean isHttpCall(ServletRequest request, ServletResponse response) {
-        return (request instanceof HttpServletRequest) && (response instanceof HttpServletResponse);
+            return;
+        }
+        chain.doFilter(request, response);
     }
 
-	public void destroy() {
-	}
-	
+    private boolean isHttpCall(ServletRequest request, ServletResponse response) {
+        return (request instanceof HttpServletRequest)
+                && (response instanceof HttpServletResponse);
+    }
 
+    public void destroy() {
+    }
 }
