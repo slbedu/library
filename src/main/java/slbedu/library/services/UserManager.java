@@ -1,7 +1,5 @@
 package slbedu.library.services;
 
-import java.io.Serializable;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

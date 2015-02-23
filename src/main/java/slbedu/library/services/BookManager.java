@@ -1,6 +1,5 @@
 package slbedu.library.services;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import javax.ejb.Stateless;
