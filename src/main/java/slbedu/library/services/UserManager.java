@@ -2,35 +2,33 @@ package slbedu.library.services;
 
 import java.io.Serializable;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
 
 import slbedu.library.dao.UserDAO;
 import slbedu.library.model.User;
 
-@Stateful
+@Stateless
 @Path("user")
 public class UserManager implements Serializable {
 
     private static final long serialVersionUID = 6780857238650315773L;
 
-    private User currentUser;
-
     @Inject
     private UserDAO userDAO;
+    
+    @Inject
+    private UserContext context;
 
     @POST
-    @Consumes
-    public User registerUser(User newUser) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void registerUser(User newUser) {
         userDAO.addUser(newUser);
-        currentUser = newUser;
-        return currentUser;
+        context.setCurrentUser(newUser);
     }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
 }
