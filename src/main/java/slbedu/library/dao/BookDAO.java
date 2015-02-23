@@ -13,6 +13,7 @@ import slbedu.library.model.User;
 
 @Singleton
 public class BookDAO {
+
     @PersistenceContext
     private EntityManager em;
 

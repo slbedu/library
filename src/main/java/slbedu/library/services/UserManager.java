@@ -14,9 +14,7 @@ import slbedu.library.model.User;
 
 @Stateless
 @Path("user")
-public class UserManager implements Serializable {
-
-    private static final long serialVersionUID = 6780857238650315773L;
+public class UserManager {
 
     @Inject
     private UserDAO userDAO;

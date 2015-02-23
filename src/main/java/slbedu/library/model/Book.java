@@ -17,7 +17,7 @@ import java.io.Serializable;
         @NamedQuery(name = "getAllBooks", query = "SELECT b FROM Book b")})
 public class Book implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -2929008106626811914L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
