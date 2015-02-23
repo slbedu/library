@@ -1,13 +1,16 @@
 package slbedu.library.services;
 
 import java.io.Serializable;
+import java.net.HttpURLConnection;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import slbedu.library.dao.UserDAO;
 import slbedu.library.model.User;
@@ -15,6 +18,8 @@ import slbedu.library.model.User;
 @Stateless
 @Path("user")
 public class UserManager {
+    
+    private static final Response RESPONSE_OK = Response.ok().build();
 
     @Inject
     private UserDAO userDAO;
@@ -27,6 +32,28 @@ public class UserManager {
     public void registerUser(User newUser) {
         userDAO.addUser(newUser);
         context.setCurrentUser(newUser);
+    }
+    
+    @Path("login")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response loginUser(User user) {
+        boolean isUserValid = userDAO.validateUserCredentials(user.getUserName(), user.getPassword());
+        if (!isUserValid) {
+            return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+        }
+        context.setCurrentUser(user);
+        return RESPONSE_OK;
+    }
+    
+    @Path("authenticated")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response isAuthenticated() {
+        if (context.getCurrentUser() == null) {
+            return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
+        }
+        return RESPONSE_OK;
     }
 
 }

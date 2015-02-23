@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Log in</title>
+<link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="styles/library.css" />
+<script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+	function login() {
+	    var username = $("#userName")[0].value;
+	    var password = $("#pwd")[0].value;
+	    
+	    
+	    if(username == "" || password == "") {
+	    	alert("Username and password should not be empty.");
+	    	return;
+	    }
+	    
+	    var data = { user : {
+		            userName : username,
+		            password : password
+    			}
+	    }
+	
+	    $.ajax({
+		    url: 'rest/user/login',
+		    type: "POST",
+		    contentType: "application/json;charset=UTF-8",
+		    data: JSON.stringify(data),
+		    statusCode: {
+			        401: function() {
+			        	alert("Authentication failed");
+			        	$( "#reset_login" ).trigger( "click" );
+			          },
+			        200: function() {
+			        	window.location.replace("index.html");
+			        }
+		        }
+		    });
+    }
+
+</script>
+</head>
+<body>
+
+	<h1 align="center">
+		<b>Log in</b>
+	</h1>
+
+	<form id="login_form" role="form" method="post">
+		<div class="form-group">
+			<label for="userName">Username:</label> <input type="text"
+				class="form-control" name="username" id="userName" value="">
+		</div>
+		<div class="form-group">
+			<label for="pwd">Password:</label> <input type="password"
+				class="form-control" name="password" id="pwd" value="">
+		</div>
+
+		<button type="reset" class="btn btn-default" id="reset_login">Reset</button>
+		<button type="button" onclick="login()" class="btn btn-default">Log in</button>
+	</form>
+	
+</body>
+</html>
