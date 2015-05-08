@@ -21,6 +21,18 @@
 		        }
 		    });
         drawTableWithBooks();
+        
+        $.ajax({
+		    url: 'rest/user/current',
+		    type: "GET",
+            dataType : "text"
+		    }).always(function(data){
+		    	if (typeof data != 'undefined') {
+		    		$("#user-holder").html(data);
+		    	} else {
+		    		$(".welcome-greeting").hide();
+		    	}
+		    });
 	});
 
     function drawTableWithBooks() {
@@ -90,5 +102,6 @@
 		<a href="login.html" class="login_form"> Log in </a>
         <a href="register.html" class="register_form"> Register </a>
 	</div>
+    <div class="welcome-greeting">Welcome <span id="user-holder"></span> !</div>
 </body>
 </html>
