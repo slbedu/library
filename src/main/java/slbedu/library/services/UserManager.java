@@ -56,4 +56,13 @@ public class UserManager {
         return RESPONSE_OK;
     }
 
+    @Path("current")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    public String getUser() {
+        if (context.getCurrentUser() == null) {
+            return null;
+        }
+        return context.getCurrentUser().getUserName();
+    }
 }

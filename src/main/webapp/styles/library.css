@@ -6,6 +6,11 @@
 .login_form {
 	margin-right: 50px;
 }
+.welcome-greeting {
+	position: absolute;
+	top: 30px;
+	left:30px;
+}
 #register_form {
 	display: block;
 	width: 50%;
