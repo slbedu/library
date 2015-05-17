@@ -17,7 +17,10 @@
 			        200: function() {
 			        	$( ".login_register" ).hide();
                         isUserAuthenticated = true;
-			        }
+			        },
+					404: function() {
+						$( ".logout" ).hide();
+					}
 		        }
 		    });
         drawTableWithBooks();
@@ -28,7 +31,9 @@
             dataType : "text"
 		    }).always(function(data){
 		    	if (typeof data != 'undefined') {
-		    		$("#user-holder").html(data);
+		    		// this will interpret the data as text, if using .html instead .text it will
+		    		// interpret it as html and without proper escaping before that this is XSS vulnarability
+		    		$("#user-holder").text(data);
 		    	} else {
 		    		$(".welcome-greeting").hide();
 		    	}
@@ -78,6 +83,16 @@
             row.append($("<td/>"));
         }
     }
+    
+    function logout() {
+    	$.ajax({
+		    url: 'rest/user/logout',
+		    type: "GET",
+            dataType : "text"
+		    }).always(function(data){
+		    	window.location.replace("login.html");
+		    });
+    }
 
 </script>
 
@@ -102,6 +117,9 @@
 		<a href="login.html" class="login_form"> Log in </a>
         <a href="register.html" class="register_form"> Register </a>
 	</div>
+    <div class="logout">
+        <a onclick="logout()"> Logout </a>
+    </div>
     <div class="welcome-greeting">Welcome <span id="user-holder"></span> !</div>
 </body>
 </html>

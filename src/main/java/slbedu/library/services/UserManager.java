@@ -1,9 +1,6 @@
 package slbedu.library.services;
 
 
-import slbedu.library.dao.UserDAO;
-import slbedu.library.model.User;
-
 import java.net.HttpURLConnection;
 
 import javax.ejb.Stateless;
@@ -14,6 +11,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import slbedu.library.dao.UserDAO;
+import slbedu.library.model.User;
 
 @Stateless
 @Path("user")
@@ -64,5 +64,12 @@ public class UserManager {
             return null;
         }
         return context.getCurrentUser().getUserName();
+    }
+
+    @Path("logout")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    public void logoutUser() {
+        context.setCurrentUser(null);
     }
 }
