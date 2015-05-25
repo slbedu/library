@@ -65,4 +65,11 @@ public class UserManager {
         }
         return context.getCurrentUser().getUserName();
     }
+
+	@Path("logout")
+	@GET
+	@Consumes(MediaType.TEXT_PLAIN)
+	public void logoutUser() {
+		context.setCurrentUser(null);
+	}
 }
